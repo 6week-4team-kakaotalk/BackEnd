@@ -52,9 +52,9 @@ dependencies {
     implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
 
 //querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"
