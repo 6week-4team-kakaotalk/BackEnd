@@ -1,6 +1,7 @@
 package com.emergency.challenge.chat.config;
 
 
+import com.emergency.challenge.chat.service.ChatRoomService;
 import com.emergency.challenge.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class StompHandler implements ChannelInterceptor {
 
     private final TokenProvider tokenProvider;
+    private final ChatRoomService chatRoomService;
 
     /*
     Invoked before the Message is actually send to the channel.

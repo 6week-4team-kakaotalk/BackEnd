@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  //연관관계 사용 x
+@NoArgsConstructor  //연관관계 사용 x
 public class ChatMessage extends Timestamped {
 
     @Id

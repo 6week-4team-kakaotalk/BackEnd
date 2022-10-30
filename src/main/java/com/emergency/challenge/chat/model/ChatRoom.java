@@ -1,7 +1,6 @@
 package com.emergency.challenge.chat.model;
 
 
-import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.domain.Timestamped;
 import lombok.*;
 
