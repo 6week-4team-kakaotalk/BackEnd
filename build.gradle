@@ -60,6 +60,9 @@ dependencies {
     implementation 'it.ozimov:embedded-redis:0.7.2'
     implementation 'javax.xml.bind:jaxb-api'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //log
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
 }
 
 tasks.named('test') {
