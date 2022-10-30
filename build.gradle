@@ -13,7 +13,7 @@ plugins {
 
 group = 'com.emergency'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -50,6 +50,16 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
+
+    //webSocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+
+    //redis
+    implementation 'it.ozimov:embedded-redis:0.7.2'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 //tasks.named('test') {
