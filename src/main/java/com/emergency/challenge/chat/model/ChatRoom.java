@@ -27,7 +27,7 @@ public class ChatRoom extends Timestamped implements Serializable {
     private String roomId;
 
     @Column(nullable = false)
-    private static String name;
+    private String name;
 
     //Many-To-Many => One-To-Many
     @OneToMany(mappedBy = "chatRoom",

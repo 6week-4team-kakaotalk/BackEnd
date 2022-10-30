@@ -5,11 +5,13 @@ import com.emergency.challenge.chat.model.ChatRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class ChatRoomRepository{
     private static final String CHAT_ROOMS = "CHAT_ROOM"; // 채팅룸 저장
     public static final String USER_COUNT = "USER_COUNT"; // 채팅룸에 입장한 클라이언트수 저장
@@ -25,6 +27,10 @@ public class ChatRoomRepository{
     // 모든 채팅방 조회 찾는거
     public List<ChatRoom> findAllRoom() {
         return hashOpsChatRoom.values(CHAT_ROOMS);
+    }
+    // 특정 채팅방 조회
+    public ChatRoom findRoomById(String id) {
+        return hashOpsChatRoom.get(CHAT_ROOMS, id);
     }
 
     // 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.

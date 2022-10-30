@@ -31,7 +31,7 @@ public class ChatRoomMember implements Serializable {
     private Member member;
 
     public ChatRoomMember(ChatRoom chatRoom, Member member){
-        this.chatRoom = chatRoom.create();
+        this.chatRoom = chatRoom.create(chatRoom.getName());
         this.member = member;
     }
 
