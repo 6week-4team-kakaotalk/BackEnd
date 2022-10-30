@@ -24,7 +24,7 @@ public class ChatMessage extends Timestamped {
     private Long memberId;  //message 작성자 Id
 
     @Column(nullable = false)
-    private Long roomId;   //message 속해있는 방 Id
+    private String roomId;   //message 속해있는 방 Id
 
     @Column(nullable = false)
     private String message; //message contents
@@ -33,7 +33,7 @@ public class ChatMessage extends Timestamped {
     private String sender;  //message 발신자
 
     public enum MessageType{
-        ENTER, TALK, QUIT   //입장, 채팅, 나가기
+        ENTER, TALK, QUIT   //입장, 채팅, 나가계
     }
 
     @Enumerated(EnumType.STRING)

@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ChatMessageResponseDto {
 
-    private Long roomId;
+    private String roomId;
     private Long memberId;
 
-    public ChatMessageResponseDto(Long roomId, Long memberId){
+    public ChatMessageResponseDto(String roomId, Long memberId){
         this.roomId = roomId;
         this.memberId = memberId;
     }
