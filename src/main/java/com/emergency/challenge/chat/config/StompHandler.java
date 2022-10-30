@@ -61,10 +61,6 @@ public class StompHandler implements ChannelInterceptor {
 
             //Client마다 SessionID 생성 => ChatRoomId와 mapping
             String sessionId = (String) message.getHeaders().get("subSessionId");
-
-
-
-
         }
 
 

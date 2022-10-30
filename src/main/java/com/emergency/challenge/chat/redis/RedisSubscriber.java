@@ -1,5 +1,6 @@
 package com.emergency.challenge.chat.redis;
 
+import com.emergency.challenge.chat.model.ChatMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,23 +11,25 @@ import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
-//MessageListener을 상속받아 onMessage 메소드를 재작성한다.
-public class RedisSubscriber implements MessageListener {
+@Service
+public class RedisSubscriber {
 
-    /*Redis에서 message가 publish(발행되면)
-    * 대기하고 있던 onMessage가
-    * 해당 message를 받아 처리한다.
-    * */
     private final ObjectMapper objectMapper;
-    private final RedisTemplate redisTemplate;
     private final SimpMessageSendingOperations messagingTemplate;
 
-    //onMessage 재작성
-    @Override
-    public void onMessage(Message message, byte[] pattern) {
 
+    /**
+     * Redis에서 메시지가 발행(publish)되면 대기하고 있던 Redis Subscriber가 해당 메시지를 받아 처리한다.
+     */
+    public void sendMessage(String publishMessage) {
+        try {
+            // ChatMessage 객채로 맵핑
+            ChatMessage chatMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
+            // 채팅방을 구독한 클라이언트에게 메시지 발송
+            messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
+        } catch (Exception e) {
+            log.error("Exception {}", e);
         }
-
+    }
 }
