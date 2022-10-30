@@ -15,7 +15,7 @@ public class ChatMessageRequestDto {
 
     private Long memberId;  //sender Id
 
-    private Long roomId; //ChatRoom Id
+    private String roomId; //ChatRoom Id
 
     private String message; //message
 
