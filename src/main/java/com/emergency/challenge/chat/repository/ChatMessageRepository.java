@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ChatMessageRepository {
     public void save(ChatMessage chatMessage) {
+
     }
 }

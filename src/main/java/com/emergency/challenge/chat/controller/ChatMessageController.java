@@ -26,13 +26,6 @@ public class ChatMessageController {
     public void message(ChatMessageRequestDto messageRequestDto){
         if (ChatMessage.MessageType.ENTER.equals(messageRequestDto.getType())){
             chatMessageService.save(messageRequestDto);
+        }
     }
-
-
-
-    }
-
-
-
-
 }

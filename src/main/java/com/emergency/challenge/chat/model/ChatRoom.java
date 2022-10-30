@@ -26,6 +26,9 @@ public class ChatRoom extends Timestamped implements Serializable {
     @Column(nullable = false)
     private String roomId;
 
+    @Column(nullable = false)
+    private static String name;
+
     //Many-To-Many => One-To-Many
     @OneToMany(mappedBy = "chatRoom",
             fetch = FetchType.LAZY,
@@ -34,10 +37,11 @@ public class ChatRoom extends Timestamped implements Serializable {
     List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
 
     //create ChatRoom
-    public ChatRoom create(){
+    public static ChatRoom create(String name){
         ChatRoom chatRoom = new ChatRoom();
         //chatRoom Id Random으로 부여
         chatRoom.roomId = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+        chatRoom.name = name;
         return chatRoom;
     }
 
