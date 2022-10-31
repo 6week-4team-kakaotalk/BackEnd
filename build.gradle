@@ -13,7 +13,7 @@ plugins {
 
 group = 'com.emergency'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -37,6 +37,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
 
+
     // JWT
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
@@ -50,6 +51,23 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
     implementation "com.querydsl:querydsl-core:${queryDslVersion}" // 한개 더 추가!
+
+    //webSocket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.webjars:sockjs-client:1.5.1'
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+
+    //redis
+    implementation 'it.ozimov:embedded-redis:0.7.3'
+    implementation 'javax.xml.bind:jaxb-api'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //log
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.8'
+
+    configurations.all {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
 }
 
 //tasks.named('test') {
