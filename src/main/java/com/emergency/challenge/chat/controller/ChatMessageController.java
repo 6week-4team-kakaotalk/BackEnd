@@ -2,6 +2,7 @@ package com.emergency.challenge.chat.controller;
 
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
+import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class ChatMessageController {
 
 
     private final ChatMessageService chatMessageService;
+    private final ChatMessageRepository chatMessageRepository;
 
 
     //route : pub/chat/message(SimpleAnnotation)
@@ -29,19 +31,14 @@ public class ChatMessageController {
 //        if (ChatMessage.MessageType.ENTER.equals(messageRequestDto.getType())){
             chatMessageService.save(messageRequestDto);
 //    }
-
-//        @MessageMapping("/ws-stomp")
-//        @SendTo("/sub/messages")
-//        public String send(String username){
-//            return "Hello, " + username;
-
     }
 
+    //채팅방 메세지 전체 조회
     @GetMapping("/api/{roomId}/messages")
     @ResponseBody
     public List<ChatMessage> getMessages(@PathVariable String roomId) {
 
-        return chatMessageService.ChatList(roomId);
+        return chatMessageRepository.ChatList(roomId);
     }
 
 

@@ -1,6 +1,6 @@
 package com.emergency.challenge.domain;
 
-import com.emergency.challenge.chat.model.ChatRoomMember;
+
 import com.emergency.challenge.shared.Authority;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -9,12 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Objects;
 
 @Builder
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Member extends Timestamped {
@@ -42,11 +42,11 @@ public class Member extends Timestamped {
     private Authority role;
 
     //Many-To-Many => One-To-Many
-    @OneToMany(mappedBy = "member",
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
-    List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
+//    @OneToMany(mappedBy = "member",
+//            fetch = FetchType.LAZY,
+//            orphanRemoval = true,
+//            cascade = CascadeType.ALL)
+//    List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
 
 
     @Override
