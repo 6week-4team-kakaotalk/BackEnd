@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller
+@RestController
 @CrossOrigin
 /*MessageController를 통해서 Subscribe한테 message 전달*/
 public class ChatRoomController {
