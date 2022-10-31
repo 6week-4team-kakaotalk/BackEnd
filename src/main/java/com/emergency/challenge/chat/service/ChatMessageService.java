@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -18,9 +17,6 @@ public class ChatMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
 
-    public List<ChatMessage> ChatList(String roomId){
-       return chatMessageRepository.ChatList(roomId);
-    }
 
     public void save(ChatMessageRequestDto requestDto) {
         ChatMessage chatMessage = new ChatMessage();

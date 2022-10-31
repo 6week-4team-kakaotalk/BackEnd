@@ -8,7 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,23 +18,25 @@ import java.io.Serializable;
 ///extends Timestamped
 public class ChatMessage extends Timestamped implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long id;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private Long memberId;  //message 작성자 Id
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String ChatId;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String roomId;   //message 속해있는 방 Id
 
-    @Column(nullable = false)
+
+
+//    @Column(nullable = false)
     private String message; //message contents
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String sender;  //message 발신자
 
     public enum MessageType{

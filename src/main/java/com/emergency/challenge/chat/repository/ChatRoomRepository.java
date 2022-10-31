@@ -1,7 +1,7 @@
 package com.emergency.challenge.chat.repository;
 
-
 import com.emergency.challenge.chat.model.ChatRoom;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class ChatRoomRepository{
 
     private static final String CHAT_ROOMS = "CHAT_ROOM"; // 채팅룸 저장
@@ -19,6 +20,9 @@ public class ChatRoomRepository{
 
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, ChatRoom> hashOpsChatRoom;
+
+    @Resource(name = "redisTemplate")
+    private HashOperations<String, String, String> hashOpsChatRoomUpdate;
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, String> hashOpsEnterInfo;
     @Resource(name = "redisTemplate")
@@ -35,8 +39,11 @@ public class ChatRoomRepository{
 
     // 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
     public ChatRoom createChatRoom(String name) {
+        System.out.println("name is :" + name);
         ChatRoom chatRoom = ChatRoom.create(name);
+        System.out.println("chatRoom is :" + chatRoom.getName());
         hashOpsChatRoom.put(CHAT_ROOMS, chatRoom.getId(), chatRoom);
+        System.out.println("chatId is :" + chatRoom.getId());
         return ChatRoom.builder()
                 .id(chatRoom.getId())
                 .name(chatRoom.getName())
@@ -70,5 +77,22 @@ public class ChatRoomRepository{
     // 채팅방에 입장한 유저수 -1
     public long minusUserCount(String roomId) {
         return Optional.ofNullable(valueOps.decrement(USER_COUNT + "_" + roomId)).filter(count -> count > 0).orElse(0L);
+    }
+
+
+    //채팅방 이름 수정
+    public boolean modifyChatRoom(String roomId, String name) {
+//        hashOpsChatRoomUpdate.put("CHAT_ROOM", roomId, name);
+//        return true;
+        //System.out.println("name is :" + name);
+        //ChatRoom chatRoom = new ChatRoom();
+        //System.out.println("chatRoom is :" + chatRoom.getName());
+        //hashOpsChatRoom.put(CHAT_ROOMS, roomId, chatRoom);
+        //System.out.println("chatId is :" + chatRoom.getId());
+        hashOpsChatRoom.put(CHAT_ROOMS, roomId, ChatRoom.builder()
+                .id(roomId)
+                .name(name)
+                .build());
+        return true;
     }
 }

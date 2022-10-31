@@ -68,7 +68,7 @@ public class ChatMessageRepository {
         return  ChatMessageResponseDto.builder()
                 .message(chatMessage.getMessage())
                 .roomId(chatMessage.getRoomId())
-                .memberId(chatMessage.getId())
+                .memberId(chatMessage.getMemberId())
                 .name(chatMessage.getSender())
                 .build();
     }
