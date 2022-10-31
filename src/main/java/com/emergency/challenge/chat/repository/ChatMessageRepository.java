@@ -35,6 +35,12 @@ public class ChatMessageRepository {
         opsHashChatMessages = redisTemplate.opsForHash();
     }
 
+    public List<ChatMessage> ChatList(String roomId){
+
+        List<ChatMessage> chatMessages = hashOpsChatMessage.values(roomId);
+        log.info("뭐가 나오나 보자 {} ",chatMessages);
+        return chatMessages;
+    }
 
     public ChatMessageResponseDto save(ChatMessage chatMessage) {
         System.out.println("chatMessage is + " + chatMessage);
@@ -55,6 +61,9 @@ public class ChatMessageRepository {
 //        List<ChatMessage> chatMessages = opsHashChatMessages.get(CHAT_MESSAGES, chatMessage.getRoomId());
 //        chatMessages.add(chatMessage);
 //        opsHashChatMessages.put(CHAT_MESSAGES, chatMessage.getRoomId(),chatMessages);
+
+
+
 
         return  ChatMessageResponseDto.builder()
                 .message(chatMessage.getMessage())
