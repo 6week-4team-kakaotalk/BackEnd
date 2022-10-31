@@ -13,7 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 //Many-To-Many 중간 다리
-public class ChatRoomMember implements Serializable {
+//implements Serializable
+public class ChatRoomMember implements Serializable{
 
 
     @Id
@@ -31,7 +32,7 @@ public class ChatRoomMember implements Serializable {
     private Member member;
 
     public ChatRoomMember(ChatRoom chatRoom, Member member){
-        this.chatRoom = chatRoom.create();
+        this.chatRoom = chatRoom.create(chatRoom.getName());
         this.member = member;
     }
 

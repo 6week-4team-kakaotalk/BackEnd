@@ -2,19 +2,19 @@ package com.emergency.challenge.chat.model;
 
 
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
-import com.emergency.challenge.domain.Timestamped;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor  //연관관계 사용 x
-public class ChatMessage extends Timestamped {
+///extends Timestamped
+public class ChatMessage implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

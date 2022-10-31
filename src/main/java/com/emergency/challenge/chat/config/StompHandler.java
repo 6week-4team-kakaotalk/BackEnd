@@ -11,6 +11,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -39,7 +40,8 @@ public class StompHandler implements ChannelInterceptor {
         * 2. webSocket connect reuqest
         * 3. if 'CONNECT' -> initial connection
         * */
-        if (StompCommand.CONNECT == accessor.getCommand()){
+        //if (StompCommand.CONNECT == accessor.getCommand()){
+        if (StompCommand.CONNECT.equals(accessor.getCommand())) {
 
             //intial connection => Token 유효성 검사
             //Access Token invalid => reissue
@@ -50,11 +52,13 @@ public class StompHandler implements ChannelInterceptor {
             tokenProvider.validateToken(refreshToken);
             log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
             log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
+            return null;
 
         }
 
         //initial connection은 되어 있고 메세지 주고 받기 전 채팅방을 구독하는 상태라면?
-        else if (StompCommand.SUBSCRIBE == accessor.getCommand()){
+//        else if (StompCommand.SUBSCRIBE == accessor.getCommand()){
+        else if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())){
 
             //header destination = /sub/chats/rooms/{roomId}
             String destination = Optional.ofNullable((String)message.getHeaders().get("subDestination"))

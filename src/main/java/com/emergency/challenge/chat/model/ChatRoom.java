@@ -8,23 +8,28 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ChatRoom extends Timestamped implements Serializable {
+@Builder
+//extends Timestamped
+public class ChatRoom implements Serializable {
 
     private static final long serialVersionUID = 6494678977089006639L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
+//    @Column(nullable = false)
+//    private String roomId;
 
     @Column(nullable = false)
-    private String roomId;
+    private String name;
 
     //Many-To-Many => One-To-Many
     @OneToMany(mappedBy = "chatRoom",
@@ -34,10 +39,13 @@ public class ChatRoom extends Timestamped implements Serializable {
     List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
 
     //create ChatRoom
-    public ChatRoom create(){
+    public static ChatRoom create(String name){
         ChatRoom chatRoom = new ChatRoom();
         //chatRoom Id Random으로 부여
-        chatRoom.roomId = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+        //chatRoom.id = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+        chatRoom.id= UUID.randomUUID().toString();
+        chatRoom.name = name;
+
         return chatRoom;
     }
 

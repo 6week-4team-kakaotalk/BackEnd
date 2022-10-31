@@ -16,6 +16,7 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
 
 
+
     public void save(ChatMessageRequestDto requestDto) {
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setMessage(requestDto.getMessage());
@@ -24,6 +25,5 @@ public class ChatMessageService {
         chatMessage.setMemberId(requestDto.getMemberId());
 
         chatMessageRepository.save(chatMessage);
-
     }
 }
