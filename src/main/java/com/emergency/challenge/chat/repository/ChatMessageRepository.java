@@ -1,5 +1,6 @@
 package com.emergency.challenge.chat.repository;
 
+
 import com.emergency.challenge.chat.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
