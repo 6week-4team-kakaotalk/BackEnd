@@ -2,6 +2,7 @@ package com.emergency.challenge.chat.model;
 
 
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
+import com.emergency.challenge.domain.Timestamped;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @Builder
 //연관관계 사용 x
 ///extends Timestamped
-public class ChatMessage implements Serializable {
+public class ChatMessage extends Timestamped implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +51,7 @@ public class ChatMessage implements Serializable {
         this.roomId = requestDto.getRoomId();
         this.message = requestDto.getMessage();
         this.sender = requestDto.getSender();
+
     }
 
 

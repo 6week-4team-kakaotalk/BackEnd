@@ -40,6 +40,7 @@ public class ChatMessageController {
     @GetMapping("/api/{roomId}/messages")
     @ResponseBody
     public List<ChatMessage> getMessages(@PathVariable String roomId) {
+
         return chatMessageService.ChatList(roomId);
     }
 
