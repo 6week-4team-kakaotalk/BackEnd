@@ -50,7 +50,6 @@ public class SecurityConfiguration {
 //                .and()  //sockJs는 기본적으로 HTML ifram 요소를 통한 전송을 허용하지 않도록 설정되는데 해당 내용을 해제한다.
 
 
-
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPointException)
                 .accessDeniedHandler(accessDeniedHandlerException)
@@ -64,7 +63,7 @@ public class SecurityConfiguration {
                 .authorizeRequests()
                 .antMatchers("/api/member/**").permitAll()
                 .antMatchers("/api/members/reissue").permitAll()
-                .antMatchers("/api/auth/**").hasAnyRole("ROLE_ADMIN","ROLE_MEMBER")
+                .antMatchers("/api/auth/**").hasAnyRole("ROLE_ADMIN", "ROLE_MEMBER")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/v2/api-docs",
                         "/swagger-resources",
@@ -77,6 +76,7 @@ public class SecurityConfiguration {
                         "/swagger-ui/**").permitAll()
                 .antMatchers("/ws/**").permitAll()
                 .antMatchers("/ws-stomp").permitAll()
+                .antMatchers("/ws-stomp/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

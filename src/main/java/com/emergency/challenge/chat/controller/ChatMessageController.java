@@ -20,9 +20,9 @@ public class ChatMessageController {
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
     public void message(ChatMessageRequestDto messageRequestDto){
-        if (ChatMessage.MessageType.ENTER.equals(messageRequestDto.getType())){
+//        if (ChatMessage.MessageType.ENTER.equals(messageRequestDto.getType())){
             chatMessageService.save(messageRequestDto);
-    }
+//    }
 
 //        @MessageMapping("/ws-stomp")
 //        @SendTo("/sub/messages")
