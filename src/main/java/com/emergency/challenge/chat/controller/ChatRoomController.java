@@ -20,14 +20,14 @@ public class ChatRoomController {
 
     //방만들기
     @PostMapping("/rooms")
-    @ResponseBody
     public ChatRoom createRoom(@RequestBody String name) {
 
         return chatRoomRepository.createChatRoom(name);
     }
+
+
     //방 하나 조회
     @GetMapping("/rooms/{roomId}")
-    @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId) {
 
         return chatRoomRepository.findRoomById(roomId);

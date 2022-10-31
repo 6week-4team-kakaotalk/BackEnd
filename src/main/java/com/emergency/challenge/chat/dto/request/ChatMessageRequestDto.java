@@ -17,6 +17,7 @@ public class ChatMessageRequestDto {
 
     private String roomId; //ChatRoom Id
 
+
     private String name; //ChatRoomName
     private String message; //message
 

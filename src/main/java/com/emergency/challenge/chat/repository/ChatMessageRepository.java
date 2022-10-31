@@ -1,13 +1,13 @@
 package com.emergency.challenge.chat.repository;
 
 
+import com.emergency.challenge.chat.dto.response.ChatMessageResponseDto;
 import com.emergency.challenge.chat.model.ChatMessage;
-import com.emergency.challenge.chat.model.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -24,7 +24,8 @@ public class ChatMessageRepository {
 
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, ChatMessage> hashOpsChatMessage;
-
+    @Resource(name = "redisTemplate")
+    private ValueOperations<String, ChatMessage> valueOps;
     @Resource(name = "redisTemplate")
     private HashOperations<String, String, List<ChatMessage>> opsHashChatMessages;
     //private HashOperations<String, String, ChatMessage> opsHashChatMessages;
@@ -35,18 +36,31 @@ public class ChatMessageRepository {
     }
 
 
-    public ChatMessage save(ChatMessage chatMessage) {
+    public ChatMessageResponseDto save(ChatMessage chatMessage) {
         System.out.println("chatMessage is + " + chatMessage);
 //        redisTemplate.setHashKeySerializer(new Jackson2JsonRedisSerializer<>(String.class));
 //        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(ChatMessage.class));
 //        System.out.println("new Jackson2JsonRedisSerializer<>(String.class) = " + new Jackson2JsonRedisSerializer<>(String.class));
 
-        hashOpsChatMessage.put(CHAT_MESSAGES, chatMessage.getRoomId(),chatMessage );
-
+//        hashOpsChatMessage.put(CHAT_MESSAGES, chatMessage.getRoomId(),ChatMessage.builder()
+//                        .message(chatMessage.getMessage())
+//                        .roomId(chatMessage.getRoomId())
+//                        .type(chatMessage.getType())
+//                        .sender(chatMessage.getSender())
+//                        .id(chatMessage.getId())
+//                .build());
+        hashOpsChatMessage.put(chatMessage.getRoomId(), chatMessage.getChatId(),chatMessage);
+//        valueOps.append(CHAT_MESSAGES, chatMessage.toString());
         //save messages
 //        List<ChatMessage> chatMessages = opsHashChatMessages.get(CHAT_MESSAGES, chatMessage.getRoomId());
 //        chatMessages.add(chatMessage);
 //        opsHashChatMessages.put(CHAT_MESSAGES, chatMessage.getRoomId(),chatMessages);
-        return null;
+
+        return  ChatMessageResponseDto.builder()
+                .message(chatMessage.getMessage())
+                .roomId(chatMessage.getRoomId())
+                .memberId(chatMessage.getId())
+                .name(chatMessage.getSender())
+                .build();
     }
 }

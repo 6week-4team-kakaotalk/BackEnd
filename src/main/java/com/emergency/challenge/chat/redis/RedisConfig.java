@@ -1,6 +1,7 @@
 package com.emergency.challenge.chat.redis;
 
 
+import com.emergency.challenge.chat.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +63,8 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+//        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setHashValueSerializer(new StringRedisSerializer());
         return redisTemplate;
     }
 }

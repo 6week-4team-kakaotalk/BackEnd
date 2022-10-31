@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +24,9 @@ public class ChatMessageService {
         chatMessage.setMessage(requestDto.getMessage());
         chatMessage.setRoomId(requestDto.getRoomId());
         chatMessage.setType(requestDto.getType());
+        chatMessage.setChatId(UUID.randomUUID().toString());
         chatMessage.setMemberId(requestDto.getMemberId());
+
 
         chatMessageRepository.save(chatMessage);
     }

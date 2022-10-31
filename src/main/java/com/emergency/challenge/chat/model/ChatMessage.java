@@ -2,9 +2,7 @@ package com.emergency.challenge.chat.model;
 
 
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,7 +10,10 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor  //연관관계 사용 x
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+//연관관계 사용 x
 ///extends Timestamped
 public class ChatMessage implements Serializable {
 
@@ -22,6 +23,9 @@ public class ChatMessage implements Serializable {
 
     @Column(nullable = false)
     private Long memberId;  //message 작성자 Id
+
+    @Column(nullable = false)
+    private String ChatId;
 
     @Column(nullable = false)
     private String roomId;   //message 속해있는 방 Id
