@@ -56,4 +56,4 @@ jobs:
             docker pull rolety2202/jossi:latest
             docker stop jossi
             docker rm jossi
-            docker run -d --rm --name jossi -p 8080:8080 rolety2202/jossi
+            docker run -d --rm --name jossi -p 8080:8080 -p 443:443 rolety2202/jossi
