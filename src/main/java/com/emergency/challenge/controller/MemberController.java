@@ -51,7 +51,7 @@ public class MemberController {
     public ResponseDto<?> friendList(HttpServletRequest request ,@PathVariable Long memberId) {
         return memberService.friendList(request, memberId);
     }
-
+    //친구추가
     @RequestMapping(value = "/auth/member/{memberId}/plus",method = RequestMethod.POST)
     public ResponseDto<?> friendPlus(HttpServletRequest request,@PathVariable Long memberId ,@RequestBody String loginId){
         return memberService.friendPlus(request,memberId,loginId);
