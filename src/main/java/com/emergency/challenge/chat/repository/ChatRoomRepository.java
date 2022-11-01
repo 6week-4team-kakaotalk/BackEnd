@@ -1,5 +1,6 @@
 package com.emergency.challenge.chat.repository;
 
+import com.emergency.challenge.chat.dto.request.RequestRoomDto;
 import com.emergency.challenge.chat.model.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
@@ -38,7 +39,7 @@ public class ChatRoomRepository{
     }
 
     // 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
-    public ChatRoom createChatRoom(String name) {
+    public ChatRoom createChatRoom(RequestRoomDto name) {
         System.out.println("name is :" + name);
         ChatRoom chatRoom = ChatRoom.create(name);
         System.out.println("chatRoom is :" + chatRoom.getName());

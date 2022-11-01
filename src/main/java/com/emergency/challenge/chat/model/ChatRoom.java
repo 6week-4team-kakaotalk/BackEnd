@@ -2,6 +2,7 @@ package com.emergency.challenge.chat.model;
 
 
 
+import com.emergency.challenge.chat.dto.request.RequestRoomDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,12 +39,12 @@ public class ChatRoom implements Serializable {
 //    List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
 
     //create ChatRoom
-    public static ChatRoom create(String name){
+    public static ChatRoom create(RequestRoomDto name){
         ChatRoom chatRoom = new ChatRoom();
         //chatRoom Id Random으로 부여
         //chatRoom.id = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
         chatRoom.id= UUID.randomUUID().toString();
-        chatRoom.name = name;
+        chatRoom.name = name.getName();
 
         return chatRoom;
     }

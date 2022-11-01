@@ -1,5 +1,6 @@
 package com.emergency.challenge.chat.controller;
 
+import com.emergency.challenge.chat.dto.request.RequestRoomDto;
 import com.emergency.challenge.chat.model.ChatRoom;
 
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
@@ -39,7 +40,7 @@ public class ChatRoomController {
 
     //3.채팅방 생성
     @PostMapping("/api/rooms")
-    public ChatRoom createRoom(@RequestBody String name) {
+    public ChatRoom createRoom(@RequestBody RequestRoomDto name) {
 
         return chatRoomRepository.createChatRoom(name);
     }
