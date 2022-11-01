@@ -18,7 +18,7 @@ public class MemberRequestDto {
     private String loginId;
 
     // entity에 name 속성이 추가됨에 따라 추가
-    @NotBlank(message = "{loginid.notblank}")
+    @NotBlank(message = "{nickName.notblank}")
     private String nickName;
 
     @NotBlank(message = "{password.notblank}")
