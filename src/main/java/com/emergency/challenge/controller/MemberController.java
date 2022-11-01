@@ -47,4 +47,15 @@ public class MemberController {
         return memberService.reissue(request, response);
     }
 
+    @RequestMapping(value = "/auth/member/{memberId}",method = RequestMethod.POST)
+    public ResponseDto<?> friendList(HttpServletRequest request ,@PathVariable Long memberId) {
+        return memberService.friendList(request, memberId);
+    }
+
+    @RequestMapping(value = "/auth/member/{memberId}/plus",method = RequestMethod.POST)
+    public ResponseDto<?> friendPlus(HttpServletRequest request,@PathVariable Long memberId ,@RequestBody String loginId){
+        return memberService.friendPlus(request,memberId,loginId);
+
+    }
+
 }

@@ -21,5 +21,7 @@ public class Friend {
     @JoinColumn(name = "member_id")
     @ManyToOne
     private Member member;
-
+    @JoinColumn(name = "friend_id")
+    @ManyToOne
+    private Member friend;
 }

@@ -5,24 +5,25 @@ import com.emergency.challenge.controller.request.MemberRequestDto;
 import com.emergency.challenge.controller.response.MemberResponseDto;
 import com.emergency.challenge.controller.response.ResponseDto;
 import com.emergency.challenge.controller.response.TokenDto;
+import com.emergency.challenge.domain.Friend;
 import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.domain.RefreshToken;
-import com.emergency.challenge.domain.UserDetailsImpl;
 import com.emergency.challenge.error.ErrorCode;
 import com.emergency.challenge.jwt.TokenProvider;
+import com.emergency.challenge.repository.FriendRepository;
 import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,8 +34,7 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
+    private final FriendRepository friendRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
 
@@ -180,6 +180,37 @@ public class MemberService {
         return tokenProvider.getMemberFromAuthentication();
     }
 
+    //친구 목록 뷸러오기
+    @Transactional
+    public ResponseDto<?> friendList(HttpServletRequest request,Long memberId){
+        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN.name(), ErrorCode.INVALID_TOKEN.getMessage());
+        }
+        Member member= memberRepository.findByMemberId(memberId).orElseThrow(NullPointerException::new);
+        return ResponseDto.success(
+                MemberResponseDto.builder()
+                .id(member.getMemberId())
+                .loginId(member.getLoginId())
+                .nickName(member.getNickName())
+                .phoneNumber(member.getPhoneNumber())
+                .friends(member.getFriends())
+                .createdAt(member.getCreatedAt())
+                .modifiedAt(member.getModifiedAt())
+                .build());
+    }
+
+    public ResponseDto<?> friendPlus(HttpServletRequest request,Long memberId,String loginId) {
+        if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
+            return ResponseDto.fail(ErrorCode.INVALID_TOKEN.name(), ErrorCode.INVALID_TOKEN.getMessage());
+        }
+        Member member = memberRepository.findByMemberId(memberId).orElse(null);
+        Member friend = memberRepository.findByLoginId(loginId).orElse(null);
+        Friend friends=new Friend();
+        friends.setMember(friend);
+        friends.setMember(member);
+        friendRepository.save(friends);
+        return ResponseDto.success("success");
+    }
 //검증 과정 따로 빼기
 //public class Verification{
 //      public ResponseDto<Object> logout(HttpServletRequest request){
