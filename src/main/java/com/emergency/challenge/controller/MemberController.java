@@ -19,7 +19,7 @@ public class MemberController {
     private final MemberService memberService;
 
     // 회원가입
-    @PostMapping(value = "member/signup")
+    @PostMapping(value = "/member/signup")
     public ResponseDto<?> signup(@Valid @RequestBody MemberRequestDto requestDto) {
 
         return memberService.createMember(requestDto);
@@ -27,7 +27,7 @@ public class MemberController {
 
 
     // 로그인
-    @PostMapping(value = "member/login")
+    @PostMapping(value = "/member/login")
     public ResponseDto<?> login(@RequestBody LoginRequestDto requestDto,
                                 HttpServletResponse response
     ) {
@@ -36,13 +36,13 @@ public class MemberController {
 
 
     // 로그아웃
-    @PostMapping(value = "auth/member/logout")
+    @PostMapping(value = "/auth/member/logout")
     public ResponseDto<?> logout(HttpServletRequest request) {
         return memberService.logout(request);
     }
 
     //토큰 재발급
-    @RequestMapping(value = "member/reissue", method = RequestMethod.POST)
+    @RequestMapping(value = "/member/reissue", method = RequestMethod.POST)
     public ResponseDto<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         return memberService.reissue(request, response);
     }
