@@ -2,7 +2,8 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "master" ]
+    branches: 
+      - CD
 
 permissions:
   contents: read
