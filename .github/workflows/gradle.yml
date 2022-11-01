@@ -56,4 +56,4 @@ jobs:
             docker pull rolety2202/kakaotalk:latest
             docker stop kakaotalk
             docker rm kakaotalk
-            docker run -d --rm --name kakaotalk -p 8080:8080 rolety2202/jossi
+            docker run -d --rm --name kakaotalk -p 8080:8080 rolety2202/kakaotalk
