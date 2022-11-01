@@ -4,6 +4,7 @@ package com.emergency.challenge.chat.service;
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
+import com.emergency.challenge.controller.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

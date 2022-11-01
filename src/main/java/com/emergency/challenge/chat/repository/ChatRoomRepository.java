@@ -81,7 +81,7 @@ public class ChatRoomRepository{
 
 
     //채팅방 이름 수정
-    public boolean modifyChatRoom(String roomId, String name) {
+    public ChatRoom modifyChatRoom(String roomId, String name) {
 //        hashOpsChatRoomUpdate.put("CHAT_ROOM", roomId, name);
 //        return true;
         //System.out.println("name is :" + name);
@@ -93,6 +93,9 @@ public class ChatRoomRepository{
                 .id(roomId)
                 .name(name)
                 .build());
-        return true;
+
+        //======================11/2===========================
+        //boolean type -> ChatRoom으로 수정
+        return hashOpsChatRoom.get(CHAT_ROOMS, roomId);
     }
 }

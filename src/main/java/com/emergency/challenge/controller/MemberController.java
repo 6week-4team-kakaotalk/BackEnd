@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@RestController
+@RestController(value = "/api")
 @CustomBaseControllerAnnotation
 public class MemberController {
 

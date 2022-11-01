@@ -41,15 +41,19 @@ public class MemberService {
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
     @Transactional
     public ResponseDto<?> createMember(MemberRequestDto requestDto) {
+
+        //회원 아이디 중복 확인
         if (null != isPresentMember(requestDto.getLoginId())) {
             return ResponseDto.fail(ErrorCode.ALREADY_SAVED_ID.name(),
                     ErrorCode.ALREADY_SAVED_ID.getMessage());
         }
 
+        //패스워드 중복 확인
         if (!requestDto.getPassword().equals(requestDto.getPasswordConfirm())) {
             return ResponseDto.fail(ErrorCode.PASSWORDS_NOT_MATCHED.name(),
                     ErrorCode.PASSWORDS_NOT_MATCHED.getMessage());
         }
+
 
         Member member = Member.builder()
                 .loginId(requestDto.getLoginId())

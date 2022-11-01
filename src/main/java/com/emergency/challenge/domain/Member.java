@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -22,7 +23,6 @@ public class Member extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
-
 
     @Column(nullable = false)
     private String loginId;
@@ -47,6 +47,13 @@ public class Member extends Timestamped {
 //            orphanRemoval = true,
 //            cascade = CascadeType.ALL)
 //    List<ChatRoomMember> chatRoomMembers = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "member",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Friend> friends = new ArrayList<>();
 
 
     @Override

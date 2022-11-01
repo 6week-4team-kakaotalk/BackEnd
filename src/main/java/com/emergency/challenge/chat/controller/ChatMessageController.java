@@ -4,6 +4,7 @@ import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
+import com.emergency.challenge.controller.response.ResponseDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +28,13 @@ public class ChatMessageController {
 
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
-    public void message(ChatMessageRequestDto messageRequestDto){
-//        if (ChatMessage.MessageType.ENTER.equals(messageRequestDto.getType())){
+    public ResponseDto<?> message(ChatMessageRequestDto messageRequestDto){
+        //======================================11/2 수정==============================
+       if (ChatMessage.MessageType.TALK.equals(messageRequestDto.getType()))
             chatMessageService.save(messageRequestDto);
 //    }
+
+        return ResponseDto.success("Successfully saved");
     }
 
     //채팅방 메세지 전체 조회
@@ -40,9 +44,5 @@ public class ChatMessageController {
 
         return chatMessageRepository.ChatList(roomId);
     }
-
-
-
-
 
 }

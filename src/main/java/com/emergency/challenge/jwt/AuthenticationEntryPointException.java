@@ -21,7 +21,8 @@ public class AuthenticationEntryPointException implements
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().println(
                 new ObjectMapper().writeValueAsString(
-                        ResponseDto.fail("BAD_REQUEST", "로그인이 필요합니다.")
+                        //수정 필요
+                        ResponseDto.fail("BAD_REQUEST", "회원가입이 필요합니다.")
                 )
         );
 

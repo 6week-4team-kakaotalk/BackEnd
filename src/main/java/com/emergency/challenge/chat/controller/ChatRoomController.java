@@ -46,9 +46,13 @@ public class ChatRoomController {
 
     //4.채팅방 이름 수정
     @PostMapping("/api/rooms/{roomId}")
-    public boolean modifyRoom(@PathVariable String roomId, @RequestBody String name ){
+    public ChatRoom modifyRoom(@PathVariable String roomId, @RequestBody String name ){
         return chatRoomRepository.modifyChatRoom(roomId, name);
     }
+
+
+
+
 
 
 
