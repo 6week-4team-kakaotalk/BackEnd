@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 //@Entity
 @Getter
@@ -31,7 +32,9 @@ public class ChatMessage extends Timestamped implements Serializable {
 //    @Column(nullable = false)
     private String roomId;   //message 속해있는 방 Id
 
+    private LocalDateTime createdAt;
 
+    private LocalDateTime modifiedAt;
 
 //    @Column(nullable = false)
     private String message; //message contents

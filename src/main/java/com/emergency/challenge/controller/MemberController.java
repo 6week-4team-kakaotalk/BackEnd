@@ -47,7 +47,7 @@ public class MemberController {
         return memberService.reissue(request, response);
     }
 
-    @RequestMapping(value = "/auth/member/{memberId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/member/{memberId}",method = RequestMethod.GET)
     public ResponseDto<?> friendList(HttpServletRequest request ,@PathVariable Long memberId) {
         return memberService.friendList(request, memberId);
     }

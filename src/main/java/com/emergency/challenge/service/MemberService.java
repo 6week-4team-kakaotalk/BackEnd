@@ -15,15 +15,12 @@ import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
