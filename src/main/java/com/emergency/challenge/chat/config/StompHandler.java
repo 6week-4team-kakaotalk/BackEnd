@@ -62,7 +62,6 @@ public class StompHandler implements ChannelInterceptor {
             tokenProvider.validateToken(refreshToken);
             log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
             log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
-            return null;
 
         }
 
