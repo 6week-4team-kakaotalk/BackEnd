@@ -80,6 +80,7 @@ public class StompHandler implements ChannelInterceptor {
 
             //Client마다 SessionID 생성 => ChatRoomId와 mapping
             String sessionId = (String) message.getHeaders().get("simpSessionId");
+            log.info("session Id is {}", sessionId);
             chatRoomRepository.setUserEnterInfo(sessionId, roomId);
 
             //채팅방 인원수 +1
