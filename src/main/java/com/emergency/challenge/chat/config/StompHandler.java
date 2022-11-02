@@ -91,6 +91,7 @@ public class StompHandler implements ChannelInterceptor {
             chatRoomRepository.plusUserCount(roomId);
             String name = Optional.ofNullable((Principal) message.getHeaders()
                     .get("simpUser")).map(Principal::getName).orElse("UnknownUser");
+            System.out.println("message12312412412421412412421 = " + message);
             System.out.println(" simpleUser= " +message.getHeaders()
                     .get("simpUser"));
             System.out.println("name111111111111111111111111111111111111 = " + name);
