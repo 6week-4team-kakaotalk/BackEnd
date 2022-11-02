@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.security.Principal;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -52,13 +53,13 @@ public class StompHandler implements ChannelInterceptor {
         * */
         //if (StompCommand.CONNECT == accessor.getCommand()){
         if (StompCommand.CONNECT == accessor.getCommand()) {
-
+            System.out.println("accessor = " + accessor);
             //intial connection => Token 유효성 검사
             //Access Token invalid => reissue
             //Refresh Token invalid => login again
-            String accessToken = accessor.getFirstNativeHeader("Authorization");
-            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
 
+            String accessToken = Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")).substring(7);
+            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
             System.out.println("refreshToken = " + refreshToken);
             System.out.println("accessToken = " + accessToken);
             tokenProvider.validateToken(accessToken);
