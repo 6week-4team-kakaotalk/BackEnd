@@ -3,6 +3,7 @@ package com.emergency.challenge.chat.controller;
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
 import com.emergency.challenge.chat.model.ChatRoom;
+import com.emergency.challenge.chat.redis.RedisSubscriber;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
@@ -31,18 +32,21 @@ public class ChatMessageController {
     private final ChatMessageService chatMessageService;
     private final ChatMessageRepository chatMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
-
+    private  final RedisSubscriber redisSubscriber;
 
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
-    public ResponseDto<?> message(ChatMessageRequestDto messageRequestDto){
+    public void message(ChatMessageRequestDto messageRequestDto){
         //======================================11/2 수정==============================
        if (ChatMessage.MessageType.TALK.equals(messageRequestDto.getType()))
             chatMessageService.save(messageRequestDto);
-//    }
 
-        return ResponseDto.success("Successfully saved");
 
+        redisSubscriber.sendMessage(ChatMessage.builder()
+               .type(ChatMessage.MessageType.ENTER)
+               .roomId(messageRequestDto.getRoomId())
+               .sender(messageRequestDto.getSender())
+               .build());
     }
 
     //채팅방 메세지 전체 조회

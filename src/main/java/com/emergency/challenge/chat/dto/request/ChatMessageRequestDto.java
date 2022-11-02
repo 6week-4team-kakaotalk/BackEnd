@@ -1,15 +1,13 @@
 package com.emergency.challenge.chat.dto.request;
 
 import com.emergency.challenge.chat.model.ChatMessage;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ChatMessageRequestDto {
 
     private ChatMessage.MessageType type; // 메시지 타입
