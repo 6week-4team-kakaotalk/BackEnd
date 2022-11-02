@@ -62,8 +62,6 @@ public class StompHandler implements ChannelInterceptor {
             tokenProvider.validateToken(refreshToken);
             log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
             log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
-            return null;
-
         }
 
         //initial connection은 되어 있고 메세지 주고 받기 전 채팅방을 구독하는 상태라면?

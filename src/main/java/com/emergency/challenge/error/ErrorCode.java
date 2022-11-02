@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
-
-
     //==========================sign up========================================
 
     SIGNUP_WRONG_MEMBERID(400, "멤버 아이디가 존재하지 않습니다"),
@@ -43,7 +41,10 @@ public enum ErrorCode {
     //==============================500 INTERNAL SERVER ERROR========================
 
     INTERNAL_SERVER_ERROR(500, "서버 에러입니다. 고객센터에 문의해주세요"),
-    BIND_Fails(500,"서버 에러입니다. 고객센터에 문의해주세요");
+    BIND_Fails(500,"서버 에러입니다. 고객센터에 문의해주세요"),
+    NOT_VALUE_AT(500,"서버 에러입니다. 고객센터에 문의해주세요"),
+    NO_ELEMENT(500,"서버 에러입니다. 고객센터에 문의해주세요");
+    //BIND_Fails(500,"서버 에러입니다. 고객센터에 문의해주세요");
 
     private final int status;
     private final String message;

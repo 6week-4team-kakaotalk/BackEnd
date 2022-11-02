@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class RestApiException {
+
     private String field;
     private String errorMessage;
 
