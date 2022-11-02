@@ -30,6 +30,8 @@ public class RedisSubscriber {
             if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
                 chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
                 chatMessage.setSender("[알림]");
+                log.info("chatMessage type is {}",chatMessage.getType());
+                log.info("chatMessage sender is {}",chatMessage.getSender());
             } else if (ChatMessage.MessageType.QUIT.equals(chatMessage.getType())) {
                 chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
                 chatMessage.setSender("[알림]");

@@ -40,7 +40,7 @@ public class ChatMessageController {
         //======================================11/2 수정==============================
        if (ChatMessage.MessageType.TALK.equals(messageRequestDto.getType()))
             chatMessageService.save(messageRequestDto);
-
+        log.info("chatMessage type is {}",messageRequestDto.getType());
 
         redisSubscriber.sendMessage(ChatMessage.builder()
                .type(ChatMessage.MessageType.ENTER)
