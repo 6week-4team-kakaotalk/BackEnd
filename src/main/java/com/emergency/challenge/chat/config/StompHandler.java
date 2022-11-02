@@ -81,7 +81,7 @@ public class StompHandler implements ChannelInterceptor {
 
             //roomId get
             String roomId = chatRoomService.getRoomId(destination);
-
+            System.out.println("roomId 111111111111111111111111111111111111111111= " + roomId);
             //Client마다 SessionID 생성 => ChatRoomId와 mapping
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             log.info("session Id is {}", sessionId);
@@ -91,6 +91,9 @@ public class StompHandler implements ChannelInterceptor {
             chatRoomRepository.plusUserCount(roomId);
             String name = Optional.ofNullable((Principal) message.getHeaders()
                     .get("simpUser")).map(Principal::getName).orElse("UnknownUser");
+            System.out.println(" simpleUser= " +message.getHeaders()
+                    .get("simpUser"));
+            System.out.println("name111111111111111111111111111111111111 = " + name);
             redisSubscriber.sendMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.ENTER)
                     .roomId(roomId)
