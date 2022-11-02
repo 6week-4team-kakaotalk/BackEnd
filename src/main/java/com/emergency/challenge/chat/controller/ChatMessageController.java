@@ -3,6 +3,7 @@ package com.emergency.challenge.chat.controller;
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
+import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
 import com.emergency.challenge.controller.response.ResponseDto;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
 
     //route : pub/chat/message(SimpleAnnotation)

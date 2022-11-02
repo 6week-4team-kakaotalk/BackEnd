@@ -27,6 +27,9 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private String loginId;
 
+//    @Column(nullable = false)
+//    private String email;
+
     @Column(nullable = false)
     private String nickName;
 

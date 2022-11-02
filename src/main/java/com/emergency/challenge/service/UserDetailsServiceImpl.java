@@ -21,6 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // nickname 이 아닌 emailid 로 변경되었으니 변수명 및 jpa 함수명 변경
         Optional<Member> member = memberRepository.findByLoginId(nickname);
 
+//======================================================================
         System.out.println("멤버 잘 찾아오니 : " + member);
 
         return member

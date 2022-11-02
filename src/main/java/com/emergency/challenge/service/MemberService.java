@@ -15,12 +15,15 @@ import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -186,22 +189,28 @@ public class MemberService {
         Member member= memberRepository.findByMemberId(memberId).orElseThrow(NullPointerException::new);
         return ResponseDto.success(
                 MemberResponseDto.builder()
-                .id(member.getMemberId())
-                .loginId(member.getLoginId())
-                .nickName(member.getNickName())
-                .phoneNumber(member.getPhoneNumber())
-                .friends(member.getFriends())
-                .createdAt(member.getCreatedAt())
-                .modifiedAt(member.getModifiedAt())
-                .build());
+                        .id(member.getMemberId())
+                        .loginId(member.getLoginId())
+                        .nickName(member.getNickName())
+                        .phoneNumber(member.getPhoneNumber())
+                        .friends(member.getFriends())
+                        .createdAt(member.getCreatedAt())
+                        .modifiedAt(member.getModifiedAt())
+                        .build());
     }
 
+    @Transactional
     public ResponseDto<?> friendPlus(HttpServletRequest request,Long memberId,String loginId) {
+        System.out.println("phoneNumber is : "+loginId);
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN.name(), ErrorCode.INVALID_TOKEN.getMessage());
         }
         Member member = memberRepository.findByMemberId(memberId).orElse(null);
+        System.out.println("member is : " + member);
         Member friend = memberRepository.findByLoginId(loginId).orElse(null);
+        //Member friend2 = memberRepository.findByPhoneNumber(loginId).orElse(null);
+        System.out.println("friend is : " + friend);
+        //System.out.println("friend2 is : " + friend2);
         Friend friends=new Friend();
         friends.setMember(friend);
         friends.setMember(member);

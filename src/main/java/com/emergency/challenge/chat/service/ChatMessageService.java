@@ -7,6 +7,7 @@ import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.controller.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;

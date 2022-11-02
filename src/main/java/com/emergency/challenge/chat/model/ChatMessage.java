@@ -46,16 +46,20 @@ public class ChatMessage extends Timestamped implements Serializable {
         ENTER, TALK, QUIT   //입장, 채팅, 나가계
     }
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    //@Enumerated(EnumType.STRING)
+    //@Column(nullable = false)
     private MessageType type;
 
-    public ChatMessage(ChatMessageRequestDto requestDto){
+    //채팅방 인원수, 채팅방 내에서 메세지가 전달될 때 인원수 갱신시 사용
+    private long userCount;
+
+    public ChatMessage(ChatMessageRequestDto requestDto, long userCount){
         this.type = requestDto.getType();
         this.memberId = requestDto.getMemberId();
         this.roomId = requestDto.getRoomId();
         this.message = requestDto.getMessage();
         this.sender = requestDto.getSender();
+        this.userCount = userCount;
 
     }
 

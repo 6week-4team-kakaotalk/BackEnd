@@ -101,6 +101,8 @@ public class TokenProvider {
             .collect(Collectors.toList());
 
     UserDetails principal = userDetailsService.loadUserByUsername(claims.getSubject());
+    //=========================================================================
+      System.out.println("principal 잘 찾아오니 " + principal);
 
     return new UsernamePasswordAuthenticationToken(principal, "", authorities);
   }
