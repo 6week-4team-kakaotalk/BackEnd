@@ -8,6 +8,7 @@ import com.emergency.challenge.controller.response.TokenDto;
 import com.emergency.challenge.domain.Friend;
 import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.domain.RefreshToken;
+import com.emergency.challenge.domain.UserDetailsImpl;
 import com.emergency.challenge.error.ErrorCode;
 import com.emergency.challenge.jwt.TokenProvider;
 import com.emergency.challenge.repository.FriendRepository;
@@ -15,6 +16,9 @@ import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +39,12 @@ public class MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
 
+
     private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+
+
+//=============================================추가===================================
+
     @Transactional
     public ResponseDto<?> createMember(MemberRequestDto requestDto) {
 
@@ -200,6 +209,7 @@ public class MemberService {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN.name(), ErrorCode.INVALID_TOKEN.getMessage());
         }
+
         Member member = memberRepository.findByMemberId(memberId).orElse(null);
         Member friend = memberRepository.findByLoginId(loginId.getLoginId())
                 .orElseThrow(()->new NullPointerException("장난치지 마세요"));
@@ -214,6 +224,20 @@ public class MemberService {
             return ResponseDto.success("success");
         }
     }
+
+
+//==============================User 조회 관련======================================
+    public Member getMember() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return memberRepository.findByLoginId(authentication.getName()).orElseThrow(
+                () -> new UsernameNotFoundException("존재하지 않는 유저입니다")
+        );
+    }
+
+//=================================================================================
+
+
+
 //검증 과정 따로 빼기
 //public class Verification{
 //      public ResponseDto<Object> logout(HttpServletRequest request){

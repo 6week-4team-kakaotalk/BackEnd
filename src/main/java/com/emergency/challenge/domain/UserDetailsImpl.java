@@ -13,10 +13,18 @@ import java.util.Collection;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
     private Member member;
+
+    public UserDetailsImpl(Member member) {
+        this.member = member;
+    }
+
+    public Member getMember(){
+        return member;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -2,9 +2,13 @@ package com.emergency.challenge.chat.repository;
 
 import com.emergency.challenge.chat.dto.request.RequestRoomDto;
 import com.emergency.challenge.chat.model.ChatRoom;
+import com.emergency.challenge.domain.Member;
+import com.emergency.challenge.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -33,10 +37,12 @@ public class ChatRoomRepository{
     public List<ChatRoom> findAllRoom() {
         return hashOpsChatRoom.values(CHAT_ROOMS);
     }
+
     // 특정 채팅방 조회
     public ChatRoom findRoomById(String id) {
         return hashOpsChatRoom.get(CHAT_ROOMS, id);
     }
+
 
     // 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
     public ChatRoom createChatRoom(RequestRoomDto name) {
@@ -55,6 +61,7 @@ public class ChatRoomRepository{
     public void setUserEnterInfo(String sessionId, String roomId) {
         hashOpsEnterInfo.put(ENTER_INFO, sessionId, roomId);
     }
+
     // 유저 세션으로 입장해 있는 채팅방 ID 조회
     public String getUserEnterRoomId(String sessionId) {
         return hashOpsEnterInfo.get(ENTER_INFO, sessionId);
@@ -99,4 +106,6 @@ public class ChatRoomRepository{
         //boolean type -> ChatRoom으로 수정
         return hashOpsChatRoom.get(CHAT_ROOMS, roomId);
     }
+
+
 }

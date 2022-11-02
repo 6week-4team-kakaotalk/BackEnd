@@ -3,15 +3,19 @@ package com.emergency.challenge.chat.repository;
 
 import com.emergency.challenge.chat.dto.response.ChatMessageResponseDto;
 import com.emergency.challenge.chat.model.ChatMessage;
+import com.emergency.challenge.domain.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Repository
@@ -38,7 +42,7 @@ public class ChatMessageRepository {
     public List<ChatMessage> ChatList(String roomId){
 
         List<ChatMessage> chatMessages = hashOpsChatMessage.values(roomId);
-        log.info("뭐가 나오나 보자 {} ",chatMessages);
+        log.info("뭐가 나오나 보자 {} ", chatMessages);
         return chatMessages;
     }
 

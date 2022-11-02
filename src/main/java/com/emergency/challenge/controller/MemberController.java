@@ -3,6 +3,7 @@ package com.emergency.challenge.controller;
 import com.emergency.challenge.controller.request.LoginRequestDto;
 import com.emergency.challenge.controller.request.MemberRequestDto;
 import com.emergency.challenge.controller.response.ResponseDto;
+import com.emergency.challenge.domain.MemberInfo;
 import com.emergency.challenge.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,11 +48,12 @@ public class MemberController {
         return memberService.reissue(request, response);
     }
 
-    //멤버 목록 전체 조회
+    //친구 목록 전체 조회
     @RequestMapping(value = "/auth/member/{memberId}",method = RequestMethod.GET)
     public ResponseDto<?> friendList(HttpServletRequest request ,@PathVariable Long memberId) {
         return memberService.friendList(request, memberId);
     }
+
     //친구추가
     @RequestMapping(value = "/auth/member/{memberId}/plus",method = RequestMethod.POST)
     public ResponseDto<?> friendPlus(HttpServletRequest request,@PathVariable Long memberId ,@RequestBody MemberRequestDto loginId){
@@ -59,5 +61,14 @@ public class MemberController {
         return memberService.friendPlus(request,memberId,loginId);
 
     }
+
+    //==========================Member 상세 조회 추가============================
+    @GetMapping("/member/memberInfo")
+    @ResponseBody
+    public MemberInfo Info(){
+        return new MemberInfo(memberService.getMember());
+    }
+    //=================================================================
+
 
 }

@@ -2,19 +2,24 @@ package com.emergency.challenge.chat.controller;
 
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.chat.model.ChatMessage;
+import com.emergency.challenge.chat.model.ChatRoom;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
 import com.emergency.challenge.controller.response.ResponseDto;
+import com.emergency.challenge.domain.Member;
+import com.emergency.challenge.error.ErrorCode;
+import com.emergency.challenge.repository.MemberRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
