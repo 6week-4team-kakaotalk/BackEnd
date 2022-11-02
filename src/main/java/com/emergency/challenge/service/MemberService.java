@@ -15,15 +15,12 @@ import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -198,24 +195,24 @@ public class MemberService {
                         .modifiedAt(member.getModifiedAt())
                         .build());
     }
-
     @Transactional
-    public ResponseDto<?> friendPlus(HttpServletRequest request,Long memberId,String loginId) {
-        System.out.println("phoneNumber is : "+loginId);
+    public ResponseDto<?> friendPlus(HttpServletRequest request,Long memberId,MemberRequestDto loginId) {
         if (!tokenProvider.validateToken(request.getHeader("Refresh-Token"))) {
             return ResponseDto.fail(ErrorCode.INVALID_TOKEN.name(), ErrorCode.INVALID_TOKEN.getMessage());
         }
         Member member = memberRepository.findByMemberId(memberId).orElse(null);
-        System.out.println("member is : " + member);
-        Member friend = memberRepository.findByLoginId(loginId).orElse(null);
-        //Member friend2 = memberRepository.findByPhoneNumber(loginId).orElse(null);
-        System.out.println("friend is : " + friend);
-        //System.out.println("friend2 is : " + friend2);
-        Friend friends=new Friend();
-        friends.setMember(friend);
-        friends.setMember(member);
-        friendRepository.save(friends);
-        return ResponseDto.success("success");
+        Member friend = memberRepository.findByLoginId(loginId.getLoginId())
+                .orElseThrow(()->new NullPointerException("장난치지 마세요"));
+        boolean friendPresent = friendRepository.findByMemberAndFriend(member, friend).isPresent();
+        if(friendPresent){
+            return ResponseDto.fail("AREADY_FRIEND", "이미 친구인 유져입니다.");
+        }else{
+            Friend friends=new Friend();
+            friends.setMember(member);
+            friends.setFriend(friend);
+            friendRepository.save(friends);
+            return ResponseDto.success("success");
+        }
     }
 //검증 과정 따로 빼기
 //public class Verification{
