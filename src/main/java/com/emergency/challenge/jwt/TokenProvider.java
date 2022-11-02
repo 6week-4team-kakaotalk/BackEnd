@@ -89,7 +89,7 @@ public class TokenProvider {
 
     //토큰 만료시 재발급
   public Authentication getAuthentication(String accessToken) {
-    Claims claims = parseClaims(accessToken);
+    Claims claims = parseClaims(accessToken.substring(7));
 
     if (claims.get(AUTHORITIES_KEY) == null) {
       throw new RuntimeException("권한 정보가 없는 토큰 입니다.");

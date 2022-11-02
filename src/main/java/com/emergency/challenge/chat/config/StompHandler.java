@@ -64,14 +64,14 @@ public class StompHandler implements ChannelInterceptor {
             //Access Token invalid => reissue
             //Refresh Token invalid => login again
 
-            String accessToken = Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")).substring(7);
-            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
-            System.out.println("refreshToken = " + refreshToken);
-            System.out.println("accessToken = " + accessToken);
-            tokenProvider.validateToken(accessToken);
-            tokenProvider.validateToken(refreshToken);
-            log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
-            log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
+//            String accessToken = Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")).substring(7);
+//            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
+//            System.out.println("refreshToken = " + refreshToken);
+//            System.out.println("accessToken = " + accessToken);
+//            tokenProvider.validateToken(accessToken);
+//            tokenProvider.validateToken(refreshToken);
+//            log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
+//            log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
 
         }
 
