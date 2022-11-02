@@ -53,7 +53,7 @@ public class MemberController {
     }
     //친구추가
     @RequestMapping(value = "/auth/member/{memberId}/plus",method = RequestMethod.POST)
-    public ResponseDto<?> friendPlus(HttpServletRequest request,@PathVariable Long memberId ,@RequestBody String loginId){
+    public ResponseDto<?> friendPlus(HttpServletRequest request,@PathVariable Long memberId ,@RequestBody MemberRequestDto loginId){
         System.out.println("request = " + request);
         return memberService.friendPlus(request,memberId,loginId);
 
