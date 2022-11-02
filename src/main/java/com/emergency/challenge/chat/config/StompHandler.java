@@ -15,8 +15,6 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 
@@ -46,33 +44,29 @@ public class StompHandler implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
 
         //Create an instance from the payload and headers of the given Message.
-//        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 
-        StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
-        if (StompCommand.CONNECT == accessor.getCommand()) {
-            Authentication authentication = tokenProvider.getAuthentication("Authorization");
-            accessor.setUser(authentication);
         /*
         * 1. client -> server
         * 2. webSocket connect request
         * 3. if 'CONNECT' -> initial connection
         * */
         //if (StompCommand.CONNECT == accessor.getCommand()){
-//        if (StompCommand.CONNECT == accessor.getCommand()) {
-//            System.out.println("accessor = " + accessor);
+        if (StompCommand.CONNECT == accessor.getCommand()) {
+            System.out.println("accessor = " + accessor);
             //intial connection => Token 유효성 검사
             //Access Token invalid => reissue
             //Refresh Token invalid => login again
 
-//            String accessToken = Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")).substring(7);
-//            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
-//            System.out.println("refreshToken = " + refreshToken);
-//            System.out.println("accessToken = " + accessToken);
-//            tokenProvider.validateToken(accessToken);
-//            tokenProvider.validateToken(refreshToken);
-//            log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
-//            log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
-
+            String accessToken = Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")).substring(7);
+            String refreshToken = accessor.getFirstNativeHeader("Refresh-Token");
+            System.out.println("refreshToken = " + refreshToken);
+            System.out.println("accessToken = " + accessToken);
+            tokenProvider.validateToken(accessToken);
+            tokenProvider.validateToken(refreshToken);
+            log.info("Authorization validity is {}",tokenProvider.validateToken(accessToken));
+            log.info("RefreshToken validity is {}",tokenProvider.validateToken(refreshToken));
+//            accessor.setUser(new User(accessor.getLogin());
         }
 
         //initial connection은 되어 있고 메세지 주고 받기 전 채팅방을 구독하는 상태라면?
