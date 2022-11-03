@@ -90,6 +90,7 @@ public class StompHandler implements ChannelInterceptor {
 
             //이름 그냥 넣어주기 로그인 정보에서
             Member member = tokenProvider.getMemberFromAuthentication();
+            log.info("member INFO {}",member);
             System.out.println("message12312412412421412412421 = " + message);
             System.out.println(" simpleUser= " +message.getHeaders()
                     .get("simpUser"));
