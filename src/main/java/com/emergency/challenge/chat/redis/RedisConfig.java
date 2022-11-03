@@ -1,7 +1,6 @@
 package com.emergency.challenge.chat.redis;
 
 
-import com.emergency.challenge.chat.model.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +37,7 @@ public class RedisConfig {
         return new ChannelTopic("chatroom");
     }
 
-    /*redis pub/sub message 처리하는 MessageListener 설정 추가*/
+    /*redis  message 처리하는 MessageListener 설정 추가*/
     @Bean
     public RedisMessageListenerContainer redisMessageListener(RedisConnectionFactory connectionFactory,
                                                               MessageListenerAdapter listenerAdapter,

@@ -44,6 +44,7 @@ public class ChatMessageController {
                 .type(messageRequestDto.getType())
                 .roomId(messageRequestDto.getRoomId())
                 .sender(messageRequestDto.getSender())
+                .message(messageRequestDto.getMessage())
                 .build();
         chatMessageService.sendChatMessage(message);
 

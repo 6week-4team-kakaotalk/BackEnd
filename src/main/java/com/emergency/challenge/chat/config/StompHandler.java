@@ -1,15 +1,9 @@
 package com.emergency.challenge.chat.config;
 
-
 import com.emergency.challenge.chat.model.ChatMessage;
-import com.emergency.challenge.chat.model.ChatRoom;
-import com.emergency.challenge.chat.redis.RedisSubscriber;
-import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
 import com.emergency.challenge.chat.service.ChatRoomService;
-import com.emergency.challenge.domain.Member;
-import com.emergency.challenge.domain.UserDetailsImpl;
 import com.emergency.challenge.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +12,8 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-
-import java.security.Principal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -109,6 +99,7 @@ public class StompHandler implements ChannelInterceptor {
                     .roomId(roomId)
                     .sender("jossi")
                     .build());
+
             log.info("SUBSCRIBED {}, {}", "jossi", roomId);
         }
 

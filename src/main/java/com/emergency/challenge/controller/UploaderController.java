@@ -1,4 +1,4 @@
-package com.emergency.challenge.controller;//package com.example.advanced.controller;
+//package com.emergency.challenge.controller;//package com.example.advanced.controller;
 //
 //import com.example.advanced.controller.response.ResponseDto;
 //import com.example.advanced.shared.uploader.ImageUploader;
