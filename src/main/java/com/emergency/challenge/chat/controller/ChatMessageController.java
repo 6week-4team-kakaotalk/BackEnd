@@ -21,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -31,8 +32,7 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
     private final ChatMessageRepository chatMessageRepository;
-    private final ChatRoomRepository chatRoomRepository;
-    private  final RedisSubscriber redisSubscriber;
+    private final ChatMessage chatMessage;
 
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
@@ -45,6 +45,9 @@ public class ChatMessageController {
                 .roomId(messageRequestDto.getRoomId())
                 .sender(messageRequestDto.getSender())
                 .message(messageRequestDto.getMessage())
+                .memberId(messageRequestDto.getMemberId())
+                .createdAt(chatMessage.getCreatedAt())
+                .modifiedAt(chatMessage.getModifiedAt())
                 .build();
         chatMessageService.sendChatMessage(message);
 
