@@ -31,7 +31,7 @@ public class ChatMessageService {
         chatMessage.setType(requestDto.getType());
         chatMessage.setChatId(UUID.randomUUID().toString());
         chatMessage.setMemberId(requestDto.getMemberId());
-        chatMessage.setCreatedAt(requestDto.getCreateAt());
+        chatMessage.setCreatedAt(requestDto.getCreatedAt());
         chatMessageRepository.save(chatMessage);
     }
 
