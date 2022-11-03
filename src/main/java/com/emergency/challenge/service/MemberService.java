@@ -16,6 +16,8 @@ import com.emergency.challenge.repository.MemberRepository;
 import com.emergency.challenge.repository.RefreshTokenRepository;
 import com.emergency.challenge.shared.Authority;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,7 +36,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
-
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final FriendRepository friendRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
@@ -108,11 +110,11 @@ public class MemberService {
         if (!member.validatePassword(passwordEncoder, requestDto.getPassword())) {
             return ResponseDto.fail(ErrorCode.INVALID_MEMBER.name(), ErrorCode.INVALID_MEMBER.getMessage());
         }
-//        UsernamePasswordAuthenticationToken authenticationToken =
-//                new UsernamePasswordAuthenticationToken(requestDto.getLoginId(), requestDto.getPassword());
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(requestDto.getLoginId(), requestDto.getPassword());
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        TokenDto tokenDto = tokenProvider.generateTokenDto(member);
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
         tokenToHeaders(tokenDto, response);
 
         return ResponseDto.success(

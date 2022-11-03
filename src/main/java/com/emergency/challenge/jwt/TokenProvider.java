@@ -53,15 +53,58 @@ public class TokenProvider {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
+    public TokenDto generateTokenDto(Authentication authentication) {
+        String authorities = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
 
-    public TokenDto generateTokenDto(Member member) {
+        long now = (new Date().getTime());
+
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        String accessToken = Jwts.builder()
+                .setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(accessTokenExpiresIn)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        String refreshToken = Jwts.builder()
+//.setSubject(authentication.getName())
+                .claim(AUTHORITIES_KEY, authorities)
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPRIRE_TIME))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+
+        Member member = ((UserDetailsImpl) authentication.getPrincipal()).getMember();
+
+        RefreshToken refreshTokenObject = RefreshToken.builder()
+                .id(member.getMemberId())
+                .member(member)
+                .value(refreshToken)
+                .build();
+
+        refreshTokenRepository.save(refreshTokenObject);
+
+        return TokenDto.builder()
+                .grantType(BEARER_PREFIX)
+                .accessToken(accessToken)
+                .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+                .refreshToken(refreshToken)
+                .build();
+
+    }
+
+    //Refresh_Token 으로 Access_Token 재발급
+    @Transactional
+    public TokenDto generateTokenDto(Member member){
+
+
         long now = (new Date().getTime());
 
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(member.getLoginId())
-                .setId(member.getNickName())
-                .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
+                .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
