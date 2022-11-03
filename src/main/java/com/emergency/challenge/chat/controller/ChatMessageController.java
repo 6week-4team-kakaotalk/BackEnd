@@ -32,11 +32,11 @@ public class ChatMessageController {
 
     private final ChatMessageService chatMessageService;
     private final ChatMessageRepository chatMessageRepository;
-    private final ChatMessage chatMessage;
+    //private final ChatMessage chatMessage;
 
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
-    public void message(ChatMessageRequestDto messageRequestDto){
+    public void message(ChatMessageRequestDto messageRequestDto, ChatMessage chatMessage){
         //======================================11/2 수정==============================
            chatMessageService.save(messageRequestDto);
            log.info("chatMessage type is {}", messageRequestDto.getType());
