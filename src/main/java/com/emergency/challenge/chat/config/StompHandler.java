@@ -115,7 +115,11 @@ public class StompHandler implements ChannelInterceptor {
             // 연결이 종료된 클라이언트 sesssionId로 채팅방 id를 얻는다.
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             String roomId = chatRoomRepository.getUserEnterRoomId(sessionId);
-            Member member = tokenProvider.getMemberFromAuthentication();
+
+            Authentication authentication = tokenProvider.getAuthentication(Objects.requireNonNull(accessor.getFirstNativeHeader("Authorization")));
+
+            log.info("authentication is {}",authentication);
+            Member member = ((UserDetailsImpl) authentication.getPrincipal()).getMember();
             // 채팅방의 인원수를 -1한다.
             chatRoomRepository.minusUserCount(roomId);
             // 클라이언트 퇴장 메시지를 채팅방에 발송한다.(redis publish)
