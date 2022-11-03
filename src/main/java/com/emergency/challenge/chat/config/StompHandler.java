@@ -4,6 +4,7 @@ import com.emergency.challenge.chat.model.ChatMessage;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatMessageService;
 import com.emergency.challenge.chat.service.ChatRoomService;
+import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +89,7 @@ public class StompHandler implements ChannelInterceptor {
 //                    .get("simpUser")).map(Principal::getName).orElse("UnknownUser");
 
             //이름 그냥 넣어주기 로그인 정보에서
-//            Member member = tokenProvider.getMemberFromAuthentication();
+            Member member = tokenProvider.getMemberFromAuthentication();
             System.out.println("message12312412412421412412421 = " + message);
             System.out.println(" simpleUser= " +message.getHeaders()
                     .get("simpUser"));
@@ -97,16 +98,17 @@ public class StompHandler implements ChannelInterceptor {
             chatMessageService.sendChatMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.ENTER)
                     .roomId(roomId)
-                    .sender("jossi")
+                    .sender(member.getNickName())
                     .build());
 
-            log.info("SUBSCRIBED {}, {}", "jossi", roomId);
+            log.info("SUBSCRIBED {}, {}", member.getNickName(), roomId);
         }
 
         else if (StompCommand.DISCONNECT == accessor.getCommand()){
             // 연결이 종료된 클라이언트 sesssionId로 채팅방 id를 얻는다.
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             String roomId = chatRoomRepository.getUserEnterRoomId(sessionId);
+            Member member = tokenProvider.getMemberFromAuthentication();
             // 채팅방의 인원수를 -1한다.
             chatRoomRepository.minusUserCount(roomId);
             // 클라이언트 퇴장 메시지를 채팅방에 발송한다.(redis publish)
@@ -114,7 +116,7 @@ public class StompHandler implements ChannelInterceptor {
             chatMessageService.sendChatMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.QUIT)
                     .roomId(roomId)
-                    .sender("jossi")
+                    .sender(member.getNickName())
                     .build());
             // 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다.
             chatRoomRepository.removeUserEnterInfo(sessionId);
