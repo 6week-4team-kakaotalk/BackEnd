@@ -34,7 +34,6 @@ public class ChatMessage extends Timestamped implements Serializable {
     private String roomId;   //message 속해있는 방 Id
 
 //    private LocalDateTime createdAt = LocalDateTime.now();
-    @CreatedDate
     private LocalDateTime createdAt;
     //private LocalDateTime modifiedAt;
 

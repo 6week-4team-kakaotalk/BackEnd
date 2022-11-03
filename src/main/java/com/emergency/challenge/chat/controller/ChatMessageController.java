@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
@@ -40,13 +41,14 @@ public class ChatMessageController {
         //======================================11/2 수정==============================
            chatMessageService.save(messageRequestDto);
            log.info("chatMessage type is {}", messageRequestDto.getType());
+           LocalDateTime localDateTime = LocalDateTime.now();
         ChatMessage message = ChatMessage.builder()
                 .type(messageRequestDto.getType())
                 .roomId(messageRequestDto.getRoomId())
                 .sender(messageRequestDto.getSender())
                 .message(messageRequestDto.getMessage())
                 .memberId(messageRequestDto.getMemberId())
-                .createdAt(new ChatMessage().getCreatedAt())
+                .createdAt(localDateTime)
                 .build();
         chatMessageService.sendChatMessage(message);
 
