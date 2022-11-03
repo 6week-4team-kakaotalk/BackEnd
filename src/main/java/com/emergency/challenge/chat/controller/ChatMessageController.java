@@ -36,18 +36,17 @@ public class ChatMessageController {
 
     //route : pub/chat/message(SimpleAnnotation)
     @MessageMapping("/chat/message")
-    public void message(ChatMessageRequestDto messageRequestDto,ChatMessage chatMessage){
+    public void message(ChatMessageRequestDto messageRequestDto){
         //======================================11/2 수정==============================
            chatMessageService.save(messageRequestDto);
            log.info("chatMessage type is {}", messageRequestDto.getType());
-           log.info("chatMessage {}" +chatMessage);
         ChatMessage message = ChatMessage.builder()
                 .type(messageRequestDto.getType())
                 .roomId(messageRequestDto.getRoomId())
                 .sender(messageRequestDto.getSender())
                 .message(messageRequestDto.getMessage())
                 .memberId(messageRequestDto.getMemberId())
-                .createdAt(chatMessage.getCreatedAt())
+                .createdAt(new ChatMessage().getCreatedAt())
                 .build();
         chatMessageService.sendChatMessage(message);
 

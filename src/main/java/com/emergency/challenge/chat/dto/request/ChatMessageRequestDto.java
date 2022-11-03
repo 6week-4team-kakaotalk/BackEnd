@@ -22,7 +22,7 @@ public class ChatMessageRequestDto {
 
     private String message; //message
 
-    private LocalDateTime createAt=LocalDateTime.now();
+//    private LocalDateTime createAt=LocalDateTime.now();
 
     private String sender; //message 발신자
 
