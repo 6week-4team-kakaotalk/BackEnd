@@ -4,6 +4,7 @@ package com.emergency.challenge.chat.model;
 import com.emergency.challenge.chat.dto.request.ChatMessageRequestDto;
 import com.emergency.challenge.domain.Timestamped;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class ChatMessage extends Timestamped implements Serializable {
     private String roomId;   //message 속해있는 방 Id
 
 //    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreatedDate
     private LocalDateTime createdAt;
     //private LocalDateTime modifiedAt;
 
