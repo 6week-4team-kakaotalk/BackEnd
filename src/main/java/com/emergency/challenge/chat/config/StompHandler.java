@@ -106,7 +106,7 @@ public class StompHandler implements ChannelInterceptor {
             redisSubscriber.sendMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.ENTER)
                     .roomId(roomId)
-                    .sender(member.getNickName())
+                    .sender("JOSSI")
                     .build());
             log.info("SUBSCRIBED {}, {}", member.getNickName(), roomId);
         }
