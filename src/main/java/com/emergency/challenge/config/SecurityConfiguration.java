@@ -74,9 +74,9 @@ public class SecurityConfiguration {
                         "/webjars/**",
                         "/v3/api-docs/**",
                         "/swagger-ui/**").permitAll()
-//                .antMatchers("/ws/**").permitAll()
-//                .antMatchers("/ws-stomp").permitAll()
-//                .antMatchers("/ws-stomp/**").permitAll()
+                .antMatchers("/ws/**").permitAll()
+                .antMatchers("/ws-stomp").permitAll()
+                .antMatchers("/ws-stomp/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()
