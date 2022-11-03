@@ -7,6 +7,7 @@ import com.emergency.challenge.chat.redis.RedisSubscriber;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
 import com.emergency.challenge.chat.service.ChatRoomService;
+import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.domain.UserDetailsImpl;
 import com.emergency.challenge.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -96,19 +97,18 @@ public class StompHandler implements ChannelInterceptor {
 //                    .get("simpUser")).map(Principal::getName).orElse("UnknownUser");
 
             //이름 그냥 넣어주기 로그인 정보에서
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String name=((UserDetailsImpl) authentication.getPrincipal()).getMember().getNickName();
+            Member member = tokenProvider.getMemberFromAuthentication();
             System.out.println("message12312412412421412412421 = " + message);
             System.out.println(" simpleUser= " +message.getHeaders()
                     .get("simpUser"));
-            System.out.println("name111111111111111111111111111111111111 = " + name);
+            System.out.println("name111111111111111111111111111111111111 = " + member.getNickName());
 
             redisSubscriber.sendMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.ENTER)
                     .roomId(roomId)
-                    .sender(name)
+                    .sender(member.getNickName())
                     .build());
-            log.info("SUBSCRIBED {}, {}", name, roomId);
+            log.info("SUBSCRIBED {}, {}", member.getNickName(), roomId);
         }
 
         else if (StompCommand.DISCONNECT == accessor.getCommand()){
