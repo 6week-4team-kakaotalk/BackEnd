@@ -46,7 +46,7 @@ public class ChatMessageController {
                 .sender(messageRequestDto.getSender())
                 .message(messageRequestDto.getMessage())
                 .memberId(messageRequestDto.getMemberId())
-                .createdAt(messageRequestDto.)
+//                .createdAt()
                 .build();
         chatMessageService.sendChatMessage(message);
 
