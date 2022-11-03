@@ -8,6 +8,7 @@ import com.emergency.challenge.controller.response.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -16,9 +17,9 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 public class ChatMessageService {
-
+    private final RedisTemplate redisTemplate;
     private final ChatMessageRepository chatMessageRepository;
-
+    private final ChannelTopic channelTopic;
 
     public void save(ChatMessageRequestDto requestDto) {
         ChatMessage chatMessage = new ChatMessage();
@@ -30,5 +31,16 @@ public class ChatMessageService {
         chatMessage.setMemberId(requestDto.getMemberId());
 
         chatMessageRepository.save(chatMessage);
+    }
+
+    public void sendChatMessage(ChatMessage chatMessage) {
+        if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
+            chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
+            chatMessage.setSender("[알림]");
+        } else if (ChatMessage.MessageType.QUIT.equals(chatMessage.getType())) {
+            chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
+            chatMessage.setSender("[알림]");
+        }
+        redisTemplate.convertAndSend(channelTopic.getTopic(), chatMessage);
     }
 }

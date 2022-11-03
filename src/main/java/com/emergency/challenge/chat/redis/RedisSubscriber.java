@@ -14,35 +14,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class RedisSubscriber {
 
-//    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 //    private final SimpMessageSendingOperations messagingTemplate;
 
     private final ChatRoomRepository chatRoomRepository;
-    private final RedisTemplate redisTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
 
     /**
      * Redis에서 메시지가 발행(publish)되면 대기하고 있던 Redis Subscriber가 해당 메시지를 받아 처리한다.
      */
-    public void sendMessage(ChatMessage chatMessage) {
-        chatMessage.setUserCount(chatRoomRepository.getUserCount(chatMessage.getRoomId()));
+    public void sendMessage(String publishMessage) {
         try {
-            if (ChatMessage.MessageType.ENTER.equals(chatMessage.getType())) {
-                chatMessage.setMessage(chatMessage.getSender() + "님이 방에 입장했습니다.");
-                chatMessage.setSender("[알림]");
-                log.info("chatMessage type is {}",chatMessage.getType());
-                log.info("chatMessage sender is {}",chatMessage.getSender());
-            } else if (ChatMessage.MessageType.QUIT.equals(chatMessage.getType())) {
-                chatMessage.setMessage(chatMessage.getSender() + "님이 방에서 나갔습니다.");
-                chatMessage.setSender("[알림]");
-            }
+            // ChatMessage 객채로 맵핑
+            ChatMessage chatMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
+            // 채팅방을 구독한 클라이언트에게 메시지 발송
+            messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
         } catch (Exception e) {
             log.error("Exception {}", e);
         }
-        redisTemplate.convertAndSend("sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
+    }
         // 채팅방을 구독한 클라이언트에게 메시지 발송
         // route => sub/chat/room/{roomId}를 subscribe한 websocket client에게 메세지 전송
         //messagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessage);
 
-    }
 }

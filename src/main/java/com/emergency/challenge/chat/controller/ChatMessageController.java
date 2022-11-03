@@ -38,15 +38,17 @@ public class ChatMessageController {
     @MessageMapping("/chat/message")
     public void message(ChatMessageRequestDto messageRequestDto){
         //======================================11/2 수정==============================
-       if (ChatMessage.MessageType.TALK.equals(messageRequestDto.getType()))
-            chatMessageService.save(messageRequestDto);
-        log.info("chatMessage type is {}",messageRequestDto.getType());
+           chatMessageService.save(messageRequestDto);
+           log.info("chatMessage type is {}", messageRequestDto.getType());
+        ChatMessage message = ChatMessage.builder()
+                .type(messageRequestDto.getType())
+                .roomId(messageRequestDto.getRoomId())
+                .sender(messageRequestDto.getSender())
+                .build();
+        chatMessageService.sendChatMessage(message);
 
-        redisSubscriber.sendMessage(ChatMessage.builder()
-               .type(ChatMessage.MessageType.ENTER)
-               .roomId(messageRequestDto.getRoomId())
-               .sender(messageRequestDto.getSender())
-               .build());
+
+       log.info("메세지 리시브 {}", "완료");
     }
 
     //채팅방 메세지 전체 조회

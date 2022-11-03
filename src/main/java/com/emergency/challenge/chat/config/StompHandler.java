@@ -6,6 +6,7 @@ import com.emergency.challenge.chat.model.ChatRoom;
 import com.emergency.challenge.chat.redis.RedisSubscriber;
 import com.emergency.challenge.chat.repository.ChatMessageRepository;
 import com.emergency.challenge.chat.repository.ChatRoomRepository;
+import com.emergency.challenge.chat.service.ChatMessageService;
 import com.emergency.challenge.chat.service.ChatRoomService;
 import com.emergency.challenge.domain.Member;
 import com.emergency.challenge.domain.UserDetailsImpl;
@@ -34,8 +35,8 @@ public class StompHandler implements ChannelInterceptor {
     private final TokenProvider tokenProvider;
     private final ChatRoomService chatRoomService;
     private final ChatRoomRepository chatRoomRepository;
-
-    private final RedisSubscriber redisSubscriber;
+    private final ChatMessageService chatMessageService;
+//    private final RedisSubscriber redisSubscriber;
 
 
     /*
@@ -103,10 +104,10 @@ public class StompHandler implements ChannelInterceptor {
                     .get("simpUser"));
 //            System.out.println("name111111111111111111111111111111111111 = " + member.getNickName());
 
-            redisSubscriber.sendMessage(ChatMessage.builder()
+            chatMessageService.sendChatMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.ENTER)
                     .roomId(roomId)
-                    .sender("JOSSI")
+                    .sender("jossi")
                     .build());
             log.info("SUBSCRIBED {}, {}", "jossi", roomId);
         }
@@ -118,11 +119,11 @@ public class StompHandler implements ChannelInterceptor {
             // 채팅방의 인원수를 -1한다.
             chatRoomRepository.minusUserCount(roomId);
             // 클라이언트 퇴장 메시지를 채팅방에 발송한다.(redis publish)
-            String name = Optional.ofNullable((Principal) message.getHeaders().get("simpUser")).map(Principal::getName).orElse("UnknownUser");
-            redisSubscriber.sendMessage(ChatMessage.builder()
+//            String name = Optional.ofNullable((Principal) message.getHeaders().get("simpUser")).map(Principal::getName).orElse("UnknownUser");
+            chatMessageService.sendChatMessage(ChatMessage.builder()
                     .type(ChatMessage.MessageType.QUIT)
                     .roomId(roomId)
-                    .sender(name)
+                    .sender("jossi")
                     .build());
             // 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다.
             chatRoomRepository.removeUserEnterInfo(sessionId);
