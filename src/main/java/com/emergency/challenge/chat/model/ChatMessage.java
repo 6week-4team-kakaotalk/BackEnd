@@ -8,7 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 
 //@Entity
 @Getter
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Builder
 //연관관계 사용 x
 ///extends Timestamped
-public class ChatMessage extends Timestamped implements Serializable {
+public class ChatMessage implements Serializable {
 
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class ChatMessage extends Timestamped implements Serializable {
     private String roomId;   //message 속해있는 방 Id
 
 //    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime createdAt;
+    private String createdAt;
     //private LocalDateTime modifiedAt;
 
 //    @Column(nullable = false)

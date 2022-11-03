@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -23,13 +24,14 @@ public class ChatMessageService {
 
     public void save(ChatMessageRequestDto requestDto) {
         ChatMessage chatMessage = new ChatMessage();
+        LocalDateTime localDateTime = LocalDateTime.now();
         chatMessage.setSender(requestDto.getSender());
         chatMessage.setMessage(requestDto.getMessage());
         chatMessage.setRoomId(requestDto.getRoomId());
         chatMessage.setType(requestDto.getType());
         chatMessage.setChatId(UUID.randomUUID().toString());
         chatMessage.setMemberId(requestDto.getMemberId());
-
+        chatMessage.setCreatedAt(requestDto.getCreateAt());
         chatMessageRepository.save(chatMessage);
     }
 
