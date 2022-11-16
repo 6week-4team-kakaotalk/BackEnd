@@ -111,7 +111,7 @@ public class StompHandler implements ChannelInterceptor {
             log.info("SUBSCRIBED {}, {}", member.getNickName(), roomId);
         }
 
-        else if (StompCommand.DISCONNECT == accessor.getCommand()){
+        else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()){
             // 연결이 종료된 클라이언트 sesssionId로 채팅방 id를 얻는다.
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             String roomId = chatRoomRepository.getUserEnterRoomId(sessionId);
